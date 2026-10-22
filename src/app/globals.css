@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { color-scheme: light; }
+html { -webkit-tap-highlight-color: transparent; scroll-behavior: smooth; }
+body { @apply bg-canvas text-ink antialiased; font-feature-settings: "ss01"; }
+
+/* Preferensi aksesibilitas (diatur di Profil → Aksesibilitas) */
+html[data-font="besar"] { font-size: 112.5%; }
+html[data-motion="reduce"] *, html[data-motion="reduce"] *::before, html[data-motion="reduce"] *::after {
+  animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important;
+}
+html[data-contrast="tinggi"] .text-slate-500, html[data-contrast="tinggi"] .text-slate-400 { color: #334155 !important; }
+html[data-contrast="tinggi"] .border-slate-200\/70, html[data-contrast="tinggi"] .border-slate-200 { border-color: #64748b !important; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  html { scroll-behavior: auto; }
+}
+
+.fade-up { animation: fadeUp .45s ease-out both; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.typing span { animation: blink 1.2s infinite both; }
+.typing span:nth-child(2) { animation-delay: .2s; } .typing span:nth-child(3) { animation-delay: .4s; }
+@keyframes blink { 0%, 80%, 100% { opacity: .2; } 40% { opacity: 1; } }
+.scrollbar-none::-webkit-scrollbar { display: none; } .scrollbar-none { scrollbar-width: none; }
