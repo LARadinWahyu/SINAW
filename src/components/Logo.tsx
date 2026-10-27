@@ -22,9 +22,9 @@ export function Logo({ className, light = false, sub = true }: { className?: str
     <span className={cx("inline-flex items-center gap-2.5", className)}>
       <LogoMark />
       <span className="leading-none">
-        <span className={cx("block text-xl font-extrabold tracking-tight", light ? "text-white" : "text-marun-700")}>SINAU</span>
+        <span className={cx("block text-xl font-extrabold tracking-tight", light ? "text-white" : "text-gradient")}>SINAU</span>
         {sub && (
-          <span className={cx("block text-[10px] font-semibold uppercase tracking-[0.18em]", light ? "text-marun-100" : "text-navy-700")}>
+          <span className={cx("block text-[10px] font-semibold uppercase tracking-[0.18em]", light ? "text-white/75" : "text-slate-500")}>
             Siap Nambah Ilmu
           </span>
         )}

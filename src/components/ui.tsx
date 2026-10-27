@@ -9,16 +9,16 @@ import { cx } from "@/lib/utils";
 
 type Variant = "primary" | "secondary" | "ghost" | "navy" | "danger" | "outline";
 const VARIANTS: Record<Variant, string> = {
-  primary: "bg-marun-700 text-white hover:bg-marun-800 shadow-sm",
-  navy: "bg-navy-700 text-white hover:bg-navy-800 shadow-sm",
-  secondary: "bg-marun-50 text-marun-800 hover:bg-marun-100",
-  outline: "border border-slate-300 bg-white text-ink hover:border-marun-300 hover:bg-marun-50",
-  ghost: "text-slate-600 hover:bg-slate-100 hover:text-ink",
+  primary: "bg-marun-600 text-white hover:bg-marun-700 shadow-[0_10px_24px_-12px_rgba(155,10,10,.8)]",
+  navy: "bg-ink text-white hover:bg-black shadow-[0_10px_24px_-14px_rgba(26,26,26,.7)]",
+  secondary: "bg-marun-50 text-marun-700 hover:bg-marun-100",
+  outline: "border border-black/10 bg-white text-ink hover:border-marun-300 hover:bg-marun-50",
+  ghost: "text-slate-600 hover:bg-black/[0.04] hover:text-ink",
   danger: "bg-red-600 text-white hover:bg-red-700",
 };
 const base =
-  "inline-flex items-center justify-center gap-2 rounded-xl font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marun-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50";
-const SIZES = { sm: "h-9 px-3 text-sm", md: "h-11 px-4 text-sm", lg: "h-12 px-6 text-base" };
+  "inline-flex items-center justify-center gap-2 rounded-full font-semibold transition active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marun-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50";
+const SIZES = { sm: "h-9 px-4 text-sm", md: "h-11 px-5 text-sm", lg: "h-12 px-7 text-base" };
 
 interface BtnProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: Variant;
@@ -46,7 +46,7 @@ export function LinkButton({ href, variant = "primary", size = "md", className, 
 }
 
 export function Card({ className, children, as: As = "div" }: { className?: string; children: ReactNode; as?: "div" | "section" | "article" }) {
-  return <As className={cx("rounded-2xl border border-slate-200/70 bg-white shadow-card", className)}>{children}</As>;
+  return <As className={cx("rounded-[2rem] border border-black/[0.04] bg-white shadow-card", className)}>{children}</As>;
 }
 
 export function Badge({ children, tone = "slate", className }: { children: ReactNode; tone?: "slate" | "marun" | "navy" | "amber" | "green"; className?: string }) {
@@ -70,10 +70,10 @@ export function DemoTag({ label = "Konten demo", className }: { label?: string; 
 }
 
 export function ProgressBar({ value, className, tone = "marun", label }: { value: number; className?: string; tone?: "marun" | "navy" | "amber"; label?: string }) {
-  const c = { marun: "bg-marun-600", navy: "bg-navy-600", amber: "bg-amber-400" }[tone];
+  const c = { marun: "bg-gradient-to-r from-marun-700 to-marun-500", navy: "bg-navy-500", amber: "bg-amber-400" }[tone];
   const v = Math.max(0, Math.min(100, value));
   return (
-    <div className={cx("h-2 w-full overflow-hidden rounded-full bg-slate-100", className)} role="progressbar" aria-valuenow={Math.round(v)} aria-valuemin={0} aria-valuemax={100} aria-label={label}>
+    <div className={cx("h-2 w-full overflow-hidden rounded-full bg-black/[0.06]", className)} role="progressbar" aria-valuenow={Math.round(v)} aria-valuemin={0} aria-valuemax={100} aria-label={label}>
       <div className={cx("h-full rounded-full transition-all", c)} style={{ width: `${v}%` }} />
     </div>
   );
@@ -101,8 +101,8 @@ export function Ring({ value, size = 88, stroke = 9, label, sub }: { value: numb
 
 export function EmptyState({ icon = "Inbox", title, desc, action }: { icon?: string; title: string; desc?: string; action?: ReactNode }) {
   return (
-    <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-slate-50/60 px-6 py-8 text-center">
-      <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-marun-700 shadow-card">
+    <div className="flex flex-col items-center justify-center rounded-[2rem] border border-dashed border-marun-200 bg-marun-50/40 px-6 py-10 text-center">
+      <div className="mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-passion-gradient text-white shadow-lift">
         <Icon name={icon} className="h-6 w-6" />
       </div>
       <p className="font-bold text-ink">{title}</p>
@@ -133,10 +133,10 @@ export function Modal({ open, onClose, title, children, wide }: { open: boolean;
   if (!open) return null;
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center bg-ink/40 p-0 backdrop-blur-[2px] sm:items-center sm:p-4" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
-      <div ref={ref} role="dialog" aria-modal="true" aria-label={title} className={cx("max-h-[92vh] w-full overflow-y-auto rounded-t-3xl bg-white p-5 shadow-2xl sm:rounded-3xl sm:p-6", wide ? "sm:max-w-2xl" : "sm:max-w-lg")}>
+      <div ref={ref} role="dialog" aria-modal="true" aria-label={title} className={cx("max-h-[92vh] w-full overflow-y-auto rounded-t-[2rem] bg-white p-6 shadow-2xl sm:rounded-[2rem] sm:p-7", wide ? "sm:max-w-2xl" : "sm:max-w-lg")}>
         <div className="mb-4 flex items-center justify-between gap-4">
           <h2 className="text-lg font-bold text-ink">{title}</h2>
-          <button onClick={onClose} className="rounded-lg p-1.5 text-slate-500 hover:bg-slate-100" aria-label="Tutup">
+          <button onClick={onClose} className="rounded-full p-2 text-slate-500 hover:bg-black/5" aria-label="Tutup">
             <X className="h-5 w-5" />
           </button>
         </div>
@@ -165,13 +165,13 @@ export function Field({ label, htmlFor, error, hint, children, className }: { la
 }
 
 const inputCls =
-  "w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-ink placeholder:text-slate-400 transition focus:border-marun-500 focus:outline-none focus:ring-2 focus:ring-marun-500/20 aria-[invalid=true]:border-red-500";
+  "w-full rounded-2xl border border-black/10 bg-white px-4 py-3 text-sm text-ink placeholder:text-slate-400 transition focus:border-marun-500 focus:outline-none focus:ring-2 focus:ring-marun-500/20 aria-[invalid=true]:border-red-500";
 
 export const Input = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputElement>>(function Input({ className, ...p }, ref) {
   return <input ref={ref} className={cx(inputCls, className)} {...p} />;
 });
 export function Textarea({ className, ...p }: TextareaHTMLAttributes<HTMLTextAreaElement>) {
-  return <textarea className={cx(inputCls, "min-h-[88px]", className)} {...p} />;
+  return <textarea className={cx(inputCls, "min-h-[88px] rounded-3xl", className)} {...p} />;
 }
 export function Select({ className, children, ...p }: SelectHTMLAttributes<HTMLSelectElement>) {
   return (
@@ -188,7 +188,7 @@ export function Toggle({ checked, onChange, label, desc, id }: { checked: boolea
         <span className="block text-sm font-semibold text-ink">{label}</span>
         {desc && <span className="block text-xs text-slate-500">{desc}</span>}
       </label>
-      <button type="button" id={id} role="switch" aria-checked={checked} onClick={() => onChange(!checked)} className={cx("relative mt-0.5 h-6 w-11 shrink-0 rounded-full transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marun-500 focus-visible:ring-offset-2", checked ? "bg-marun-700" : "bg-slate-300")}>
+      <button type="button" id={id} role="switch" aria-checked={checked} onClick={() => onChange(!checked)} className={cx("relative mt-0.5 h-6 w-11 shrink-0 rounded-full transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marun-500 focus-visible:ring-offset-2", checked ? "bg-marun-600" : "bg-slate-300")}>
         <span className={cx("absolute top-0.5 h-5 w-5 rounded-full bg-white shadow transition", checked ? "left-[22px]" : "left-0.5")} />
       </button>
     </div>
@@ -197,11 +197,11 @@ export function Toggle({ checked, onChange, label, desc, id }: { checked: boolea
 
 export function PageHeader({ title, desc, actions, kicker }: { title: string; desc?: string; actions?: ReactNode; kicker?: ReactNode }) {
   return (
-    <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+    <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
       <div>
         {kicker && <div className="mb-2">{kicker}</div>}
-        <h1 className="text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">{title}</h1>
-        {desc && <p className="mt-1 text-sm text-slate-500 sm:text-base">{desc}</p>}
+        <h1 className="text-3xl font-bold leading-[1.05] tracking-[-0.035em] text-ink sm:text-[2.6rem]">{title}</h1>
+        {desc && <p className="mt-2 max-w-2xl text-sm text-slate-500 sm:text-base">{desc}</p>}
       </div>
       {actions && <div className="flex flex-wrap gap-2">{actions}</div>}
     </div>
@@ -215,7 +215,7 @@ export function RichText({ text }: { text: string }) {
     <div className="space-y-2 text-sm leading-relaxed">
       {blocks.map((b, i) =>
         i % 2 === 1 ? (
-          <pre key={i} className="overflow-x-auto whitespace-pre-wrap rounded-xl bg-navy-900 p-3 font-mono text-xs text-navy-50">
+          <pre key={i} className="overflow-x-auto whitespace-pre-wrap rounded-2xl bg-navy-900 p-3.5 font-mono text-xs text-navy-50">
             {b.trim()}
           </pre>
         ) : (

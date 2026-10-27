@@ -171,7 +171,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     <div className="space-y-4">
       {groups.map((g) => (
         <div key={g.title || "utama"}>
-          {g.title && (compact ? <div className="mx-3 mb-2 border-t border-slate-100" aria-hidden /> : <p className="mb-1 px-3 text-[11px] font-bold uppercase tracking-wider text-slate-400">{g.title}</p>)}
+          {g.title && (compact ? <div className="mx-4 mb-2 border-t border-black/5" aria-hidden /> : <p className="mb-1.5 px-4 text-[11px] font-bold uppercase tracking-[0.14em] text-slate-400">{g.title}</p>)}
           <ul className="space-y-0.5">
       {g.items.map(({ href, label, icon: I }) => (
         <li key={href}>
@@ -180,9 +180,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             title={compact ? label : undefined}
             aria-current={isActive(href) ? "page" : undefined}
             className={cx(
-              "flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marun-500",
+              "flex items-center gap-3 rounded-full px-4 py-2.5 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marun-500",
               compact && "justify-center px-0",
-              isActive(href) ? "bg-marun-700 text-white shadow-sm" : "text-slate-600 hover:bg-marun-50 hover:text-marun-700",
+              isActive(href) ? "bg-passion-gradient text-white shadow-[0_10px_22px_-12px_rgba(155,10,10,.9)]" : "text-slate-600 hover:bg-marun-50 hover:text-marun-700",
             )}
           >
             <I className="h-5 w-5 shrink-0" />
@@ -197,26 +197,27 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   );
 
   return (
-    <div className="min-h-screen">
-      <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-[60] focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:shadow">
+    <div className="relative min-h-screen bg-passion-bg">
+      <div className="pointer-events-none fixed inset-0 bg-passion-soft" aria-hidden />
+      <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-[60] focus:rounded-full focus:bg-white focus:px-4 focus:py-2 focus:shadow">
         Lompat ke konten
       </a>
       {/* Sidebar desktop */}
-      <aside className={cx("fixed inset-y-0 left-0 z-30 hidden flex-col border-r border-slate-200 bg-white transition-all lg:flex", collapsed ? "w-[76px]" : "w-64")}>
-        <div className={cx("flex h-16 items-center border-b border-slate-100", collapsed ? "justify-center" : "px-5")}>
+      <aside className={cx("glass fixed bottom-4 left-4 top-4 z-30 hidden flex-col overflow-hidden rounded-[2rem] border border-white/80 shadow-[0_12px_40px_-18px_rgba(94,12,12,.35)] transition-all lg:flex", collapsed ? "w-[76px]" : "w-64")}>
+        <div className={cx("flex h-20 shrink-0 items-center", collapsed ? "justify-center" : "px-6")}>
           <Link href="/app" aria-label="Beranda SINAU">
             {collapsed ? <LogoMark /> : <Logo />}
           </Link>
         </div>
-        <nav className="flex-1 overflow-y-auto p-3" aria-label="Menu aplikasi">
+        <nav className="scrollbar-none flex-1 overflow-y-auto px-3 pb-3" aria-label="Menu aplikasi">
           {navList(collapsed)}
         </nav>
-        <div className="space-y-1 border-t border-slate-100 p-3">
-          <button onClick={toggleCollapse} className={cx("flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-500 hover:bg-slate-100", collapsed && "justify-center px-0")} aria-label={collapsed ? "Perluas sidebar" : "Ciutkan sidebar"}>
+        <div className="space-y-1 border-t border-black/5 p-3">
+          <button onClick={toggleCollapse} className={cx("flex w-full items-center gap-3 rounded-full px-4 py-2.5 text-sm font-semibold text-slate-500 hover:bg-black/[0.04]", collapsed && "justify-center px-0")} aria-label={collapsed ? "Perluas sidebar" : "Ciutkan sidebar"}>
             <ChevronsLeft className={cx("h-5 w-5 transition", collapsed && "rotate-180")} />
             {!collapsed && "Ciutkan"}
           </button>
-          <button onClick={doLogout} className={cx("flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-500 hover:bg-red-50 hover:text-red-600", collapsed && "justify-center px-0")} title="Keluar">
+          <button onClick={doLogout} className={cx("flex w-full items-center gap-3 rounded-full px-4 py-2.5 text-sm font-semibold text-slate-500 hover:bg-red-50 hover:text-red-600", collapsed && "justify-center px-0")} title="Keluar">
             <LogOut className="h-5 w-5" />
             {!collapsed && "Keluar"}
           </button>
@@ -225,27 +226,27 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
       {/* Drawer mobile */}
       {drawer && (
-        <div className="fixed inset-0 z-50 bg-ink/40 lg:hidden" onClick={() => setDrawer(false)}>
-          <nav className="h-full w-72 overflow-y-auto bg-white p-4" onClick={(e) => e.stopPropagation()} aria-label="Menu aplikasi">
+        <div className="fixed inset-0 z-50 bg-ink/30 backdrop-blur-sm lg:hidden" onClick={() => setDrawer(false)}>
+          <nav className="m-3 h-[calc(100%-1.5rem)] w-72 max-w-[calc(100vw-1.5rem)] overflow-y-auto rounded-[2rem] bg-white p-4 shadow-2xl" onClick={(e) => e.stopPropagation()} aria-label="Menu aplikasi">
             <div className="mb-4 flex items-center justify-between">
               <Logo />
-              <button onClick={() => setDrawer(false)} className="rounded-lg p-2" aria-label="Tutup menu">
+              <button onClick={() => setDrawer(false)} className="rounded-full bg-black/[0.04] p-2" aria-label="Tutup menu">
                 <X className="h-5 w-5" />
               </button>
             </div>
             {navList(false)}
-            <button onClick={doLogout} className="mt-4 flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-red-600 hover:bg-red-50">
+            <button onClick={doLogout} className="mt-4 flex w-full items-center gap-3 rounded-full px-4 py-2.5 text-sm font-semibold text-red-600 hover:bg-red-50">
               <LogOut className="h-5 w-5" /> Keluar
             </button>
           </nav>
         </div>
       )}
 
-      <div className={cx("transition-all", collapsed ? "lg:pl-[76px]" : "lg:pl-64")}>
+      <div className={cx("relative transition-all", collapsed ? "lg:pl-[92px]" : "lg:pl-[272px]")}>
         {/* Topbar */}
-        <header className="sticky top-0 z-20 border-b border-slate-200/70 bg-white/90 backdrop-blur">
-          <div className="mx-auto flex h-16 max-w-6xl items-center gap-3 px-4 sm:px-6">
-            <button className="rounded-lg p-2 lg:hidden" onClick={() => setDrawer(true)} aria-label="Buka menu">
+        <header className="sticky top-0 z-20 px-3 pt-3 sm:px-6 lg:pt-4">
+          <div className="glass mx-auto flex h-16 max-w-6xl items-center gap-2 rounded-full border border-white/80 pl-2 pr-2 shadow-[0_12px_40px_-18px_rgba(94,12,12,.35)] sm:gap-3 sm:pl-3">
+            <button className="rounded-full bg-black/[0.04] p-2.5 lg:hidden" onClick={() => setDrawer(true)} aria-label="Buka menu">
               <Menu className="h-5 w-5" />
             </button>
             <Link href="/app" className="lg:hidden" aria-label="Beranda">
@@ -257,12 +258,12 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               </span>
             )}
             <div className="ml-auto flex items-center gap-2">
-              <Link href="/app/pencapaian" className="inline-flex items-center gap-1.5 rounded-full bg-amber-50 px-3 py-1.5 text-sm font-bold text-amber-600 ring-1 ring-amber-300/60" title="Streak saat ini">
-                <Flame className={cx("h-4 w-4", streak.todayMet ? "text-amber-500" : "text-slate-400")} /> {streak.current}
+              <Link href="/app/pencapaian" className="inline-flex items-center gap-1.5 rounded-full bg-marun-50 px-3.5 py-2 text-sm font-bold text-marun-700 ring-1 ring-marun-200" title="Streak saat ini">
+                <Flame className={cx("h-4 w-4", streak.todayMet ? "text-marun-500" : "text-slate-400")} /> {streak.current}
                 <span className="sr-only">hari streak</span>
               </Link>
               <div className="relative" ref={bellRef}>
-                <button onClick={() => setBell(!bell)} className="relative rounded-xl p-2.5 text-slate-600 hover:bg-slate-100" aria-label={`Notifikasi (${alerts.length} pengingat tenggat)`} aria-expanded={bell}>
+                <button onClick={() => setBell(!bell)} className="relative rounded-full bg-black/[0.04] p-2.5 text-slate-600 hover:bg-black/[0.08]" aria-label={`Notifikasi (${alerts.length} pengingat tenggat)`} aria-expanded={bell}>
                   <Bell className="h-5 w-5" />
                   {alerts.length > 0 ? (
                     <span className="absolute -right-0.5 -top-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-marun-600 px-1 text-[10px] font-bold text-white ring-2 ring-white">{alerts.length}</span>
@@ -271,15 +272,15 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                   ) : null}
                 </button>
                 {bell && (
-                  <div className="absolute right-0 top-12 w-80 max-w-[calc(100vw-2rem)] rounded-2xl border border-slate-200 bg-white p-2 shadow-xl">
-                    <p className="px-3 py-2 text-sm font-bold">Notifikasi</p>
+                  <div className="absolute right-0 top-14 w-80 max-w-[calc(100vw-2rem)] rounded-[1.75rem] border border-black/5 bg-white p-2 shadow-[0_30px_60px_-28px_rgba(94,12,12,.45)]">
+                    <p className="px-4 py-2 text-sm font-bold">Notifikasi</p>
                     {notifications.length === 0 ? (
                       <p className="px-3 pb-3 text-sm text-slate-500">Belum ada notifikasi.</p>
                     ) : (
                       <ul className="max-h-80 overflow-y-auto">
                         {notifications.map((n) => (
                           <li key={n.id}>
-                            <Link href={n.href} className="flex gap-2.5 rounded-xl px-3 py-2.5 hover:bg-canvas">
+                            <Link href={n.href} className="flex gap-2.5 rounded-2xl px-3 py-2.5 hover:bg-passion-bg">
                               <span className={cx("mt-1.5 h-2 w-2 shrink-0 rounded-full", n.tone === "red" ? "bg-red-500" : n.tone === "amber" ? "bg-amber-400" : "bg-navy-400")} />
                               <span className="min-w-0">
                               <p className={cx("text-sm font-semibold", n.tone === "red" && "text-red-700")}>{n.title}</p>
@@ -290,14 +291,14 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                         ))}
                       </ul>
                     )}
-                    <Link href="/app/profil#notifikasi" className="mt-1 flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-semibold text-slate-500 hover:bg-canvas">
+                    <Link href="/app/profil#notifikasi" className="mt-1 flex items-center gap-2 rounded-full px-3 py-2 text-xs font-semibold text-slate-500 hover:bg-passion-bg">
                       <Settings2 className="h-3.5 w-3.5" /> Atur pengingat
                     </Link>
                   </div>
                 )}
               </div>
-              <Link href="/app/profil" className="flex items-center gap-2 rounded-xl p-1 pr-2 hover:bg-slate-100" aria-label="Profil">
-                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-navy-700 text-sm font-bold text-white">{first.slice(0, 1).toUpperCase()}</span>
+              <Link href="/app/profil" className="flex items-center gap-2 rounded-full p-1 pr-1 hover:bg-black/[0.04] md:pr-3" aria-label="Profil">
+                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-passion-gradient text-sm font-bold text-white shadow-inner">{first.slice(0, 1).toUpperCase()}</span>
                 <span className="hidden text-sm font-semibold md:block">{first}</span>
               </Link>
             </div>
@@ -306,29 +307,29 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
         {showReminder && (
           <div className="mx-auto mt-4 max-w-6xl px-4 sm:px-6">
-            <div className="flex items-center gap-3 rounded-2xl bg-navy-800 px-4 py-3 text-sm text-white">
+            <div className="flex items-center gap-3 rounded-[1.75rem] bg-ink px-5 py-3.5 text-sm text-white shadow-float">
               <Bell className="h-5 w-5 shrink-0 text-amber-300" />
               <p className="flex-1">
                 Pengingat belajar ({s?.reminderTime}): kamu belum memenuhi target {s?.dailyTarget} aktivitas hari ini. Satu materi atau satu tugas sudah cukup untuk menjaga streak!
               </p>
-              <button onClick={() => setDismissed(true)} className="rounded-lg p-1 hover:bg-white/10" aria-label="Tutup pengingat">
+              <button onClick={() => setDismissed(true)} className="rounded-full p-1.5 hover:bg-white/10" aria-label="Tutup pengingat">
                 <X className="h-4 w-4" />
               </button>
             </div>
           </div>
         )}
 
-        <main id="main" className="mx-auto max-w-6xl px-4 pb-28 pt-6 sm:px-6 lg:pb-12">
+        <main id="main" className="mx-auto max-w-6xl px-4 pb-32 pt-8 sm:px-6 lg:pb-12">
           {children}
         </main>
       </div>
 
       {/* Bottom nav mobile */}
-      <nav className="fixed inset-x-0 bottom-0 z-30 border-t border-slate-200 bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur lg:hidden" aria-label="Navigasi bawah">
-        <ul className="grid grid-cols-5">
+      <nav className="glass fixed inset-x-3 bottom-[calc(0.75rem+env(safe-area-inset-bottom))] z-30 rounded-full border border-white/80 p-1.5 shadow-[0_12px_40px_-18px_rgba(94,12,12,.35)] lg:hidden" aria-label="Navigasi bawah">
+        <ul className="grid grid-cols-5 gap-1">
           {MOBILE.map(({ href, label, icon: I }) => (
             <li key={href}>
-              <Link href={href} aria-current={isActive(href) ? "page" : undefined} className={cx("flex flex-col items-center gap-1 py-2.5 text-[11px] font-semibold", isActive(href) ? "text-marun-700" : "text-slate-500")}>
+              <Link href={href} aria-current={isActive(href) ? "page" : undefined} className={cx("flex flex-col items-center gap-0.5 rounded-full py-2 text-[10.5px] font-semibold transition", isActive(href) ? "bg-passion-gradient text-white shadow-[0_8px_18px_-10px_rgba(155,10,10,.9)]" : "text-slate-500")}>
                 <I className="h-5 w-5" />
                 {label}
               </Link>

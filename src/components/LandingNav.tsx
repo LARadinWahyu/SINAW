@@ -15,6 +15,10 @@ const LINKS = [
   ["#career", "Career Lounge"],
   ["#sdg", "SDG"],
 ];
+const LEFT = LINKS.slice(0, 3);
+const RIGHT = LINKS.slice(3);
+
+const linkCls = "rounded-full px-3 py-2 text-[13px] font-semibold text-ink/70 transition hover:bg-black/[0.04] hover:text-ink";
 
 export function LandingNav() {
   const [open, setOpen] = useState(false);
@@ -30,62 +34,75 @@ export function LandingNav() {
   const loggedIn = hydrated && user;
 
   return (
-    <header className={cx("fixed inset-x-0 top-0 z-40 transition", scrolled || open ? "bg-white/95 shadow-sm backdrop-blur" : "bg-transparent")}>
-      <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6" aria-label="Navigasi utama">
-        <Link href="/" aria-label="SINAU beranda" className="rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marun-500">
-          <Logo light={!scrolled && !open} />
-        </Link>
-        <ul className="hidden items-center gap-1 lg:flex">
-          {LINKS.map(([h, l]) => (
+    <header className="fixed inset-x-0 top-0 z-40 px-3 pt-3 sm:px-6 sm:pt-5">
+      <nav
+        className={cx(
+          "glass mx-auto flex h-14 max-w-6xl items-center justify-between gap-2 rounded-full border border-white/70 pl-3 pr-2 transition-shadow sm:h-16 sm:pl-4",
+          scrolled || open ? "shadow-[0_12px_40px_-12px_rgba(94,12,12,.30)]" : "shadow-[0_8px_30px_-14px_rgba(94,12,12,.25)]",
+        )}
+        aria-label="Navigasi utama"
+      >
+        {/* kiri: tautan (desktop) / logo (mobile) */}
+        <ul className="hidden flex-1 items-center gap-0.5 lg:flex">
+          {LEFT.map(([h, l]) => (
             <li key={h}>
-              <a href={h} className={cx("rounded-lg px-3 py-2 text-sm font-semibold transition", scrolled ? "text-slate-600 hover:text-marun-700" : "text-white/85 hover:text-white")}>
+              <a href={h} className={linkCls}>
                 {l}
               </a>
             </li>
           ))}
         </ul>
-        <div className="hidden items-center gap-2 lg:flex">
+        <Link href="/" aria-label="SINAU beranda" className="rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-marun-500 lg:mx-4">
+          <Logo sub={false} />
+        </Link>
+        {/* kanan */}
+        <div className="hidden flex-1 items-center justify-end gap-0.5 lg:flex">
+          {RIGHT.map(([h, l]) => (
+            <a key={h} href={h} className={cx(linkCls, h === "#sdg" && "hidden xl:inline-flex")}>
+              {l}
+            </a>
+          ))}
           {loggedIn ? (
-            <Link href="/app" className="rounded-xl bg-amber-400 px-4 py-2.5 text-sm font-bold text-ink hover:bg-amber-300">
+            <Link href="/app" className="ml-2 rounded-full bg-marun-600 px-5 py-2.5 text-sm font-bold text-white shadow-[0_10px_24px_-12px_rgba(155,10,10,.8)] hover:bg-marun-700">
               Buka Dashboard
             </Link>
           ) : (
             <>
-              <Link href="/masuk" className={cx("rounded-xl px-4 py-2.5 text-sm font-semibold", scrolled ? "text-marun-700 hover:bg-marun-50" : "text-white hover:bg-white/10")}>
+              <Link href="/masuk" className={cx(linkCls, "ml-1 text-ink")}>
                 Masuk
               </Link>
-              <Link href="/masuk?mode=daftar" className={cx("rounded-xl px-4 py-2.5 text-sm font-bold", scrolled ? "bg-marun-700 text-white hover:bg-marun-800" : "bg-white text-marun-700 hover:bg-marun-50")}>
+              <Link href="/masuk?mode=daftar" className="ml-1 rounded-full bg-marun-600 px-5 py-2.5 text-sm font-bold text-white shadow-[0_10px_24px_-12px_rgba(155,10,10,.8)] hover:bg-marun-700">
                 Mulai Belajar
               </Link>
             </>
           )}
         </div>
-        <button className={cx("rounded-lg p-2 lg:hidden", scrolled || open ? "text-ink" : "text-white")} onClick={() => setOpen(!open)} aria-expanded={open} aria-label={open ? "Tutup menu" : "Buka menu"}>
-          {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+        <button className="rounded-full bg-black/[0.04] p-2.5 text-ink lg:hidden" onClick={() => setOpen(!open)} aria-expanded={open} aria-label={open ? "Tutup menu" : "Buka menu"}>
+          {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
       </nav>
       {open && (
-        <div className="border-t border-slate-100 bg-white px-4 pb-5 lg:hidden">
-          <ul className="py-2">
+        <div className="glass mx-auto mt-2 max-w-6xl rounded-[2rem] border border-white/70 p-3 shadow-[0_20px_50px_-20px_rgba(94,12,12,.35)] lg:hidden">
+          <ul>
             {LINKS.map(([h, l]) => (
               <li key={h}>
-                <a href={h} onClick={() => setOpen(false)} className="block rounded-lg px-3 py-3 font-semibold text-slate-700 hover:bg-marun-50">
+                <a href={h} onClick={() => setOpen(false)} className="block rounded-full px-4 py-3 font-semibold text-ink/80 hover:bg-marun-50">
                   {l}
                 </a>
               </li>
             ))}
           </ul>
-          <div className="grid grid-cols-2 gap-2">
+          <div className="mt-2 grid grid-cols-2 gap-2">
             {loggedIn ? (
-              <Link href="/app" className="col-span-2 rounded-xl bg-marun-700 py-3 text-center font-bold text-white">
+              <Link href="/app" className="col-span-2 rounded-full bg-marun-600 py-3 text-center font-bold text-white">
                 Buka Dashboard
               </Link>
             ) : (
               <>
-                <Link href="/masuk" className="rounded-xl border border-slate-300 py-3 text-center font-semibold">
+                <Link href="/masuk" className="rounded-full border border-black/10 bg-white py-3 text-center font-semibold">
                   Masuk
                 </Link>
-                <Link href="/masuk?mode=daftar" className="rounded-xl bg-marun-700 py-3 text-center font-bold text-white">
+                <Link href="/masuk?mode=daftar" className="rounded-full bg-marun-600 py-3 text-center font-bold text-white">
                   Mulai Belajar
                 </Link>
               </>

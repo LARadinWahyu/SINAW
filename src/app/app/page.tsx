@@ -37,49 +37,68 @@ export default function Dashboard() {
 
   return (
     <div className="space-y-6">
-      {/* Sapaan */}
-      <section className="relative overflow-hidden rounded-3xl bg-marun-700 p-6 text-white sm:p-8">
-        <div className="absolute -right-10 -top-10 h-48 w-48 rounded-full bg-white/5" aria-hidden />
-        <div className="absolute -bottom-16 right-24 h-40 w-40 rounded-full bg-black/10" aria-hidden />
-        <div className="relative flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+      {/* Sapaan — panel mesh gradient dengan kartu kaca melayang */}
+      <section className="grain relative isolate overflow-hidden rounded-[2rem] bg-passion-mesh p-6 text-white shadow-lift sm:rounded-[2.5rem] sm:p-10">
+        <div className="relative grid gap-8 lg:grid-cols-[1.3fr_1fr] lg:items-center">
           <div>
-            <p className="text-sm font-semibold text-marun-100">{sapaan()},</p>
-            <h1 className="text-2xl font-extrabold sm:text-3xl">{first}! 👋</h1>
-            <p className="mt-1 text-sm text-marun-50">
+            <p className="text-sm font-semibold text-white/80">{sapaan()},</p>
+            <h1 className="mt-1 text-4xl font-semibold leading-[1] tracking-[-0.045em] sm:text-6xl">{first}! 👋</h1>
+            <p className="mt-3 text-sm text-white/85 sm:text-base">
               {STATUS_LABEL[d.profile.status]}
               {majors.length > 0 && <> · Minat: {majors.join(", ")}</>}
             </p>
+            <div className="mt-6 flex flex-wrap gap-2.5">
+              <Link href="/app/belajar" className="inline-flex h-11 items-center gap-2 rounded-full bg-white px-5 text-sm font-bold text-ink shadow-[0_14px_30px_-14px_rgba(0,0,0,.45)] transition hover:-translate-y-0.5">
+                <BookOpen className="h-4 w-4 text-marun-600" /> Pusat Belajar
+              </Link>
+              <Link href="/app/nara" className="glass-dark inline-flex h-11 items-center gap-2 rounded-full px-5 text-sm font-bold ring-1 ring-white/35 transition hover:bg-white/25">
+                <Sparkles className="h-4 w-4" /> Tanya NARA
+              </Link>
+            </div>
           </div>
-          <div className="flex flex-wrap gap-2">
-            <Link href="/app/belajar" className="inline-flex h-10 items-center gap-2 rounded-xl bg-white px-4 text-sm font-bold text-marun-700 hover:bg-marun-50">
-              <BookOpen className="h-4 w-4" /> Pusat Belajar
-            </Link>
-            <Link href="/app/nara" className="inline-flex h-10 items-center gap-2 rounded-xl bg-white/10 px-4 text-sm font-bold ring-1 ring-white/30 hover:bg-white/20">
-              <Sparkles className="h-4 w-4" /> Tanya NARA
-            </Link>
+          {/* ringkasan cepat (data asli) */}
+          <div className="relative grid grid-cols-3 gap-3 lg:block lg:h-60" aria-hidden>
+            <div className="glass-dark rounded-[1.5rem] p-4 ring-1 ring-white/30 lg:absolute lg:right-[11rem] lg:top-0 lg:w-40 lg:-rotate-6">
+              <Flame className="h-5 w-5" />
+              <p className="mt-2 text-3xl font-semibold tracking-tight">{streak.current}</p>
+              <p className="text-[11px] text-white/80">hari beruntun</p>
+            </div>
+            <div className="rounded-[1.5rem] bg-white p-4 text-ink shadow-2xl lg:absolute lg:right-0 lg:top-2 lg:w-40 lg:rotate-6">
+              <Target className="h-5 w-5 text-marun-600" />
+              <p className="mt-2 text-3xl font-semibold tracking-tight">{pt ? pt.score : "—"}</p>
+              <p className="text-[11px] text-slate-500">nilai pretest</p>
+            </div>
+            <div className="glass-dark rounded-[1.5rem] p-4 ring-1 ring-white/30 lg:absolute lg:right-[5.5rem] lg:top-[8.75rem] lg:w-40 lg:rotate-2">
+              <BookOpen className="h-5 w-5" />
+              <p className="mt-2 text-3xl font-semibold tracking-tight">{prog.pct}%</p>
+              <p className="text-[11px] text-white/80">materi selesai</p>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Deadline reminder */}
       {alerts.length > 0 && (
-        <section aria-labelledby="tenggat" className="rounded-2xl border border-amber-300 bg-amber-50 p-4 sm:p-5">
+        <section aria-labelledby="tenggat" className="rounded-[2rem] border border-marun-200 bg-white p-5 shadow-card sm:p-6">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <h2 id="tenggat" className="flex items-center gap-2 font-bold text-ink">
-              <AlarmClock className="h-5 w-5 text-amber-600" /> Mendekati tenggat
-              <span className="rounded-full bg-amber-400 px-2 text-xs font-bold">{alerts.length}</span>
+            <h2 id="tenggat" className="flex items-center gap-2.5 text-lg font-semibold tracking-tight text-ink">
+              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-passion-gradient text-white">
+                <AlarmClock className="h-4 w-4" />
+              </span>
+              Mendekati tenggat
+              <span className="rounded-full bg-marun-50 px-2.5 text-xs font-bold text-marun-700">{alerts.length}</span>
             </h2>
-            <Link href="/app/tugas" className="text-sm font-bold text-marun-700 hover:underline">Kelola tugas →</Link>
+            <Link href="/app/tugas" className="rounded-full bg-black/[0.04] px-4 py-2 text-sm font-bold text-ink hover:bg-black/[0.08]">Kelola tugas →</Link>
           </div>
-          <ul className="mt-3 grid gap-2 sm:grid-cols-2">
+          <ul className="mt-4 grid gap-2 sm:grid-cols-2">
             {alerts.slice(0, 4).map((a) => (
-              <li key={a.task.id} className="flex items-center gap-3 rounded-xl bg-white p-3">
-                <input type="checkbox" onChange={() => setTaskStatus(a.task.id, "done")} className="h-5 w-5 shrink-0 cursor-pointer accent-marun-700" aria-label={`Tandai ${a.task.title} selesai`} />
+              <li key={a.task.id} className="flex items-center gap-3 rounded-full bg-passion-bg py-2.5 pl-4 pr-3">
+                <input type="checkbox" onChange={() => setTaskStatus(a.task.id, "done")} className="h-5 w-5 shrink-0 cursor-pointer accent-marun-600" aria-label={`Tandai ${a.task.title} selesai`} />
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-sm font-semibold">{a.task.title}</p>
                   <p className="text-xs text-slate-500">{formatRelatif(a.task.dueDate)}, {a.task.dueTime}</p>
                 </div>
-                <span className={cx("shrink-0 rounded-full px-2 py-0.5 text-xs font-bold", a.level === "terlewat" ? "bg-red-100 text-red-700" : "bg-amber-100 text-amber-700")}>{a.label}</span>
+                <span className={cx("shrink-0 rounded-full px-2.5 py-1 text-xs font-bold", a.level === "terlewat" ? "bg-red-100 text-red-700" : "bg-amber-100 text-amber-600")}>{a.label}</span>
               </li>
             ))}
           </ul>
@@ -87,15 +106,17 @@ export default function Dashboard() {
         </section>
       )}
 
-      {/* Ringkasan */}
-      <div className="grid gap-4 md:grid-cols-3">
-        <Card className="p-5">
+      {/* Ringkasan — susunan asimetris */}
+      <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-12">
+        <Card className="p-6 lg:col-span-4">
           <div className="flex items-center justify-between">
-            <h2 className="font-bold">Kesiapan akademik</h2>
-            <Target className="h-5 w-5 text-marun-600" />
+            <h2 className="text-lg font-semibold tracking-tight">Kesiapan akademik</h2>
+            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-marun-50 text-marun-600">
+              <Target className="h-4 w-4" />
+            </span>
           </div>
           {pt ? (
-            <div className="mt-4 flex items-center gap-4">
+            <div className="mt-5 flex items-center gap-4">
               <Ring value={pt.score} sub="skor pretest" label={`Skor pretest terakhir ${pt.score}`} />
               <div className="text-sm">
                 <p className="font-semibold">
@@ -108,7 +129,7 @@ export default function Dashboard() {
               </div>
             </div>
           ) : (
-            <div className="mt-4 flex items-center gap-4">
+            <div className="mt-5 flex items-center gap-4">
               <Ring value={null} sub="belum ada data" label="Belum ada data kesiapan" />
               <div className="text-sm">
                 <p className="text-slate-500">Kerjakan pretest untuk mengetahui level kesiapanmu.</p>
@@ -120,20 +141,21 @@ export default function Dashboard() {
           )}
         </Card>
 
-        <Card className="p-5">
-          <div className="flex items-center justify-between">
-            <h2 className="font-bold">Daily streak</h2>
-            <span className="inline-flex items-center gap-1 text-2xl font-extrabold text-amber-500">
-              <Flame className="h-6 w-6" /> {streak.current}
+        <section className="relative overflow-hidden rounded-[2rem] bg-passion-gradient p-6 text-white shadow-lift md:col-span-2 lg:col-span-5 lg:-rotate-1">
+          <div className="absolute -right-12 -top-12 h-40 w-40 rounded-full bg-white/15 blur-2xl" aria-hidden />
+          <div className="relative flex items-center justify-between">
+            <h2 className="text-lg font-semibold tracking-tight">Daily streak</h2>
+            <span className="inline-flex items-center gap-1 text-3xl font-semibold tracking-tight">
+              <Flame className="h-7 w-7" /> {streak.current}
             </span>
           </div>
-          <ol className="mt-4 flex justify-between" aria-label="Aktivitas 7 hari terakhir">
+          <ol className="relative mt-5 flex justify-between" aria-label="Aktivitas 7 hari terakhir">
             {week.map((w) => {
               const met = w.aktivitas >= d.settings.dailyTarget;
               return (
                 <li key={w.key} className="flex flex-col items-center gap-1.5">
-                  <span className={cx("text-[11px] font-semibold", w.key === today ? "text-marun-700" : "text-slate-400")}>{w.day}</span>
-                  <span className={cx("flex h-8 w-8 items-center justify-center rounded-full", met ? "bg-marun-700 text-white" : w.key === today ? "border-2 border-dashed border-marun-300" : "bg-slate-100")} title={`${w.aktivitas} aktivitas`}>
+                  <span className={cx("text-[11px] font-semibold", w.key === today ? "text-white" : "text-white/70")}>{w.day}</span>
+                  <span className={cx("flex h-9 w-9 items-center justify-center rounded-full", met ? "bg-white text-marun-600 shadow" : w.key === today ? "border-2 border-dashed border-white/80" : "bg-white/20")} title={`${w.aktivitas} aktivitas`}>
                     {met && <CheckCircle2 className="h-4 w-4" />}
                     <span className="sr-only">{met ? "target tercapai" : "belum tercapai"}</span>
                   </span>
@@ -141,21 +163,23 @@ export default function Dashboard() {
               );
             })}
           </ol>
-          <p className="mt-4 text-xs text-slate-500">
-            Hari ini: <b className="text-ink">{streak.todayCount}</b> dari target {d.settings.dailyTarget} aktivitas belajar.
+          <p className="relative mt-5 text-xs text-white/90">
+            Hari ini: <b className="text-white">{streak.todayCount}</b> dari target {d.settings.dailyTarget} aktivitas belajar.
           </p>
-        </Card>
+        </section>
 
-        <Card className="p-5">
+        <Card className="p-6 lg:col-span-3">
           <div className="flex items-center justify-between">
-            <h2 className="font-bold">Progres pembelajaran</h2>
-            <BookOpen className="h-5 w-5 text-navy-600" />
+            <h2 className="text-lg font-semibold tracking-tight">Progres pembelajaran</h2>
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-navy-50 text-navy-600">
+              <BookOpen className="h-4 w-4" />
+            </span>
           </div>
-          <p className="mt-4 text-3xl font-extrabold">
+          <p className="mt-5 text-5xl font-semibold tracking-tight">
             {prog.pct}
-            <span className="text-lg text-slate-400">%</span>
+            <span className="text-xl text-slate-400">%</span>
           </p>
-          <ProgressBar value={prog.pct} className="mt-2" tone="navy" label="Progres materi" />
+          <ProgressBar value={prog.pct} className="mt-3" tone="marun" label="Progres materi" />
           <p className="mt-2 text-xs text-slate-500">
             {prog.done} dari {prog.total} materi relevan selesai
           </p>
@@ -163,32 +187,32 @@ export default function Dashboard() {
       </div>
 
       <div className="grid gap-6 lg:grid-cols-[1.35fr_1fr]">
-        <div className="space-y-6">
+        <div className="min-w-0 space-y-6">
           {/* Lanjut belajar */}
           {last && (
-            <Card className="flex flex-col gap-4 p-5 sm:flex-row sm:items-center">
-              <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl text-white" style={{ background: content.subjects.find((s) => s.id === last.subjectId)?.color ?? "#9B0A0A" }}>
+            <Card className="flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:p-6">
+              <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full text-white shadow-md" style={{ background: content.subjects.find((s) => s.id === last.subjectId)?.color ?? "#9B0A0A" }}>
                 <Icon name={content.subjects.find((s) => s.id === last.subjectId)?.icon ?? "BookOpen"} className="h-6 w-6" />
               </span>
               <div className="flex-1">
                 <p className="text-xs font-bold uppercase tracking-wide text-marun-600">Materi terakhir dipelajari</p>
-                <p className="font-bold">{last.title}</p>
+                <p className="text-lg font-semibold tracking-tight">{last.title}</p>
                 <p className="text-xs text-slate-500">{d.completed[last.id] ? "Sudah selesai" : `±${last.minutes} menit · ${last.level}`}</p>
               </div>
-              <LinkButton href={`/app/belajar/${last.id}`} variant="secondary" size="sm">
+              <LinkButton href={`/app/belajar/${last.id}`} variant="primary" size="sm">
                 {d.completed[last.id] ? "Buka lagi" : "Lanjutkan"} <ArrowRight className="h-4 w-4" />
               </LinkButton>
             </Card>
           )}
 
           {/* Rekomendasi */}
-          <Card className="p-5">
+          <Card className="p-5 sm:p-6">
             <div className="mb-4 flex items-center justify-between">
               <div>
-                <h2 className="font-bold">Rekomendasi belajar</h2>
+                <h2 className="text-lg font-semibold tracking-tight">Rekomendasi belajar</h2>
                 <p className="text-xs text-slate-500">{pt ? "Berdasarkan hasil pretest & profilmu" : "Berdasarkan profil onboarding-mu"}</p>
               </div>
-              <Link href="/app/belajar" className="text-sm font-bold text-marun-700 hover:underline">
+              <Link href="/app/belajar" className="rounded-full bg-black/[0.04] px-4 py-2 text-sm font-bold text-ink hover:bg-black/[0.08]">
                 Semua
               </Link>
             </div>
@@ -200,8 +224,8 @@ export default function Dashboard() {
                   const sub = content.subjects.find((s) => s.id === m.subjectId);
                   return (
                     <li key={m.id}>
-                      <Link href={`/app/belajar/${m.id}`} className="flex items-center gap-3 rounded-xl p-3 transition hover:bg-canvas">
-                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-white" style={{ background: sub?.color }}>
+                      <Link href={`/app/belajar/${m.id}`} className="flex items-center gap-3 rounded-[1.5rem] bg-passion-bg/70 p-3 transition hover:bg-marun-50">
+                        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-white" style={{ background: sub?.color }}>
                           <Icon name={sub?.icon ?? "BookOpen"} className="h-5 w-5" />
                         </span>
                         <span className="min-w-0 flex-1">
@@ -218,8 +242,8 @@ export default function Dashboard() {
           </Card>
 
           {/* Grafik aktivitas */}
-          <Card className="p-5">
-            <h2 className="font-bold">Aktivitas belajar 7 hari terakhir</h2>
+          <Card className="p-5 sm:p-6">
+            <h2 className="text-lg font-semibold tracking-tight">Aktivitas belajar 7 hari terakhir</h2>
             <p className="text-xs text-slate-500">Jumlah aktivitas tercatat (materi, kuis, pretest, tugas selesai)</p>
             {d.activity.length === 0 ? (
               <div className="mt-4">
@@ -229,10 +253,16 @@ export default function Dashboard() {
               <div className="mt-4 h-44" role="img" aria-label={`Aktivitas 7 hari: ${week.map((w) => `${w.day} ${w.aktivitas}`).join(", ")}`}>
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={week} margin={{ top: 5, right: 5, left: -25, bottom: 0 }}>
+                    <defs>
+                      <linearGradient id="dashBar" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="#CC2E2E" />
+                        <stop offset="100%" stopColor="#9B0A0A" />
+                      </linearGradient>
+                    </defs>
                     <XAxis dataKey="day" tickLine={false} axisLine={false} fontSize={12} />
                     <YAxis allowDecimals={false} tickLine={false} axisLine={false} fontSize={12} />
-                    <Tooltip cursor={{ fill: "#FDF3F3" }} formatter={(v) => [`${v} aktivitas`, ""]} labelFormatter={(l) => `${l}`} />
-                    <Bar dataKey="aktivitas" fill="#9B0A0A" radius={[6, 6, 0, 0]} />
+                    <Tooltip cursor={{ fill: "#FDF3F3" }} formatter={(v) => [`${v} aktivitas`, ""]} labelFormatter={(l) => `${l}`} contentStyle={{ borderRadius: 16, border: "none", boxShadow: "0 8px 30px rgba(26,26,26,.08)" }} />
+                    <Bar dataKey="aktivitas" fill="url(#dashBar)" radius={[10, 10, 10, 10]} maxBarSize={36} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -240,12 +270,12 @@ export default function Dashboard() {
           </Card>
         </div>
 
-        <div className="space-y-6">
+        <div className="min-w-0 space-y-6">
           {/* To-do hari ini */}
-          <Card className="p-5">
-            <div className="mb-3 flex items-center justify-between">
-              <h2 className="font-bold">To-do hari ini</h2>
-              <Link href="/app/tugas?baru=1" className="inline-flex items-center gap-1 rounded-lg bg-marun-50 px-2.5 py-1.5 text-xs font-bold text-marun-700 hover:bg-marun-100">
+          <Card className="p-5 sm:p-6">
+            <div className="mb-4 flex items-center justify-between">
+              <h2 className="text-lg font-semibold tracking-tight">To-do hari ini</h2>
+              <Link href="/app/tugas?baru=1" className="inline-flex items-center gap-1 rounded-full bg-marun-600 px-3.5 py-2 text-xs font-bold text-white shadow-[0_8px_18px_-10px_rgba(155,10,10,.9)] hover:bg-marun-700">
                 <Plus className="h-3.5 w-3.5" /> Tambah
               </Link>
             </div>
@@ -254,8 +284,8 @@ export default function Dashboard() {
             ) : (
               <ul className="space-y-2">
                 {todayTasks.map((t) => (
-                  <li key={t.id} className="flex items-start gap-3 rounded-xl bg-canvas p-3">
-                    <input type="checkbox" checked={t.status === "done"} onChange={() => setTaskStatus(t.id, t.status === "done" ? "todo" : "done")} className="mt-0.5 h-5 w-5 shrink-0 cursor-pointer rounded accent-marun-700" aria-label={`Tandai ${t.title} selesai`} />
+                  <li key={t.id} className="flex items-start gap-3 rounded-[1.5rem] bg-passion-bg p-3.5">
+                    <input type="checkbox" checked={t.status === "done"} onChange={() => setTaskStatus(t.id, t.status === "done" ? "todo" : "done")} className="mt-0.5 h-5 w-5 shrink-0 cursor-pointer rounded accent-marun-600" aria-label={`Tandai ${t.title} selesai`} />
                     <div className="min-w-0 flex-1">
                       <p className={cx("text-sm font-semibold", t.status === "done" && "text-slate-400 line-through")}>{t.title}</p>
                       <p className={cx("flex items-center gap-1 text-xs", t.dueDate < today && t.status !== "done" ? "font-semibold text-red-600" : "text-slate-500")}>
@@ -270,22 +300,24 @@ export default function Dashboard() {
           </Card>
 
           {/* Jadwal */}
-          <Card className="p-5">
-            <div className="mb-3 flex items-center gap-2">
-              <CalendarClock className="h-5 w-5 text-navy-600" />
-              <h2 className="font-bold">Jadwal & pengingat</h2>
+          <Card className="p-5 sm:p-6">
+            <div className="mb-3 flex items-center gap-2.5">
+              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-navy-50 text-navy-600">
+                <CalendarClock className="h-4 w-4" />
+              </span>
+              <h2 className="text-lg font-semibold tracking-tight">Jadwal & pengingat</h2>
             </div>
             {upcoming.length === 0 ? (
-              <div className="rounded-xl bg-canvas p-3 text-sm">
+              <div className="rounded-[1.5rem] bg-passion-bg p-4 text-sm">
                 <p className="text-slate-500">Tidak ada jadwal dalam 7 hari ke depan.</p>
                 <Link href="/app/tugas?view=pintar" className="mt-1 inline-block font-bold text-marun-700 hover:underline">Susun jadwal otomatis dengan Smart Schedule →</Link>
               </div>
             ) : (
-              <ul className="divide-y divide-slate-100">
+              <ul className="divide-y divide-black/5">
                 {upcoming.slice(0, 4).map((t) => (
                   <li key={t.id} className="flex items-center justify-between gap-3 py-2.5 text-sm">
                     <span className="truncate font-semibold">{t.title}</span>
-                    <span className="shrink-0 text-xs text-slate-500">
+                    <span className="shrink-0 rounded-full bg-passion-bg px-2.5 py-1 text-xs text-slate-600">
                       {formatRelatif(t.dueDate)} · {t.dueTime}
                     </span>
                   </li>
@@ -301,10 +333,12 @@ export default function Dashboard() {
           </Card>
 
           {/* Hasil pretest */}
-          <Card className="p-5">
-            <div className="mb-3 flex items-center gap-2">
-              <ClipboardCheck className="h-5 w-5 text-marun-600" />
-              <h2 className="font-bold">Hasil pretest terakhir</h2>
+          <Card className="p-5 sm:p-6">
+            <div className="mb-3 flex items-center gap-2.5">
+              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-marun-50 text-marun-600">
+                <ClipboardCheck className="h-4 w-4" />
+              </span>
+              <h2 className="text-lg font-semibold tracking-tight">Hasil pretest terakhir</h2>
             </div>
             {pt && analysis ? (
               <div className="space-y-3 text-sm">
@@ -334,25 +368,27 @@ export default function Dashboard() {
             )}
           </Card>
 
-          {/* Akses cepat */}
-          <div className="grid grid-cols-2 gap-4">
-            <Link href="/app/nara" className="rounded-2xl bg-navy-800 p-4 text-white transition hover:-translate-y-0.5">
-              <Sparkles className="h-6 w-6 text-amber-300" />
-              <p className="mt-3 font-bold">AI NARA</p>
-              <p className="text-xs text-navy-200">Jelaskan konsep & buat rencana belajar</p>
+          {/* Akses cepat — kartu miring */}
+          <div className="grid grid-cols-2 gap-4 pt-1">
+            <Link href="/app/nara" className="grain relative isolate -rotate-2 overflow-hidden rounded-[2rem] bg-passion-mesh p-5 text-white shadow-lift transition hover:rotate-0">
+              <Sparkles className="h-7 w-7" strokeWidth={1.6} />
+              <p className="mt-4 text-lg font-semibold tracking-tight">AI NARA</p>
+              <p className="text-xs text-white/85">Jelaskan konsep & buat rencana belajar</p>
             </Link>
-            <Link href="/app/karier" className="rounded-2xl bg-amber-400 p-4 text-ink transition hover:-translate-y-0.5">
-              <Briefcase className="h-6 w-6" />
-              <p className="mt-3 font-bold">Career Lounge</p>
-              <p className="text-xs text-ink/70">Jurusan, karier & budaya kampus</p>
+            <Link href="/app/karier" className="rotate-2 rounded-[2rem] bg-ink p-5 text-white shadow-float transition hover:rotate-0">
+              <Briefcase className="h-7 w-7 text-amber-300" strokeWidth={1.6} />
+              <p className="mt-4 text-lg font-semibold tracking-tight">Career Lounge</p>
+              <p className="text-xs text-white/70">Jurusan, karier & budaya kampus</p>
             </Link>
           </div>
 
           {content.announcements.length > 0 && (
-            <Card className="p-5">
-              <div className="mb-2 flex items-center gap-2">
-                <Megaphone className="h-5 w-5 text-marun-600" />
-                <h2 className="font-bold">Pengumuman</h2>
+            <Card className="p-5 sm:p-6">
+              <div className="mb-2 flex items-center gap-2.5">
+                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-marun-50 text-marun-600">
+                  <Megaphone className="h-4 w-4" />
+                </span>
+                <h2 className="text-lg font-semibold tracking-tight">Pengumuman</h2>
               </div>
               {content.announcements.slice(0, 2).map((a) => (
                 <div key={a.id} className="mt-2">

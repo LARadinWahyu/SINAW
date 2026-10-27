@@ -5,7 +5,15 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Diambil dari identitas visual presentasi & logo SINAU
+        // Gaya "Passion Finder" (bentuk, kaca, mesh) dengan warna identitas SINAU: merah marun + navy.
+        passion: {
+          bg: "#FBF7F6", // latar utama (putih kemerahan lembut)
+          sand: "#F4EAE8", // kanvas luar
+          cream: "#F5ECEA", // latar section
+          orange: "#9B0A0A", // aksen utama (marun)
+          peach: "#DE6464", // aksen terang (merah muda)
+          dark: "#16192B",
+        },
         marun: {
           50: "#FDF3F3",
           100: "#FBE4E4",
@@ -39,16 +47,24 @@ const config: Config = {
           600: "#C9720C",
         },
         ink: "#16192B",
-        canvas: "#F7F5F5",
+        canvas: "#FBF7F6",
+      },
+      backgroundImage: {
+        "passion-gradient": "linear-gradient(135deg, #9B0A0A 0%, #D63A3A 100%)",
+        "passion-mesh":
+          "radial-gradient(60% 80% at 12% 15%, #DE6464 0%, transparent 60%), radial-gradient(50% 70% at 88% 25%, #9B0A0A 0%, transparent 65%), radial-gradient(45% 60% at 72% 100%, #3A5795 0%, transparent 70%), radial-gradient(40% 60% at 18% 100%, #CC2E2E 0%, transparent 70%), linear-gradient(135deg, #B31616 0%, #7E0B0B 100%)",
+        "passion-soft":
+          "radial-gradient(50% 60% at 10% 0%, rgba(204,46,46,.10) 0%, transparent 70%), radial-gradient(45% 55% at 100% 10%, rgba(58,87,149,.10) 0%, transparent 70%)",
       },
       fontFamily: {
         sans: ['"Plus Jakarta Sans"', "Inter", "system-ui", "sans-serif"],
       },
       boxShadow: {
-        card: "0 1px 2px rgba(22,25,43,.04), 0 4px 16px -6px rgba(22,25,43,.08)",
-        lift: "0 10px 30px -12px rgba(94,12,12,.35)",
+        card: "0 8px 30px rgba(26,26,26,.05)",
+        lift: "0 18px 40px -16px rgba(155,10,10,.45)",
+        float: "0 30px 60px -28px rgba(60,10,10,.30)",
       },
-      borderRadius: { xl2: "1.25rem" },
+      borderRadius: { xl2: "1.25rem", "4xl": "2rem", "5xl": "2.5rem" },
     },
   },
   plugins: [],

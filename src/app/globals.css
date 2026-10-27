@@ -5,6 +5,15 @@
 :root { color-scheme: light; }
 html { -webkit-tap-highlight-color: transparent; scroll-behavior: smooth; }
 body { @apply bg-canvas text-ink antialiased; font-feature-settings: "ss01"; }
+h1, h2, h3 { letter-spacing: -0.025em; }
+::selection { background: rgba(204, 46, 46, 0.22); }
+
+/* Gaya "Passion Finder" */
+.glass { background: rgba(255, 255, 255, 0.72); -webkit-backdrop-filter: blur(18px) saturate(1.4); backdrop-filter: blur(18px) saturate(1.4); }
+.glass-dark { background: rgba(255, 255, 255, 0.16); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); }
+.text-gradient { background-image: linear-gradient(135deg, #9B0A0A 0%, #D63A3A 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.grain::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: .10; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
 
 /* Preferensi aksesibilitas (diatur di Profil → Aksesibilitas) */
 html[data-font="besar"] { font-size: 112.5%; }
